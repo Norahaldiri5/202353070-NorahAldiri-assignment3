@@ -267,6 +267,47 @@ body.light-mode #about::before {
    outline: 2px solid var(--accent);
    border-color: var(--accent);
 }
+
+/* =========================
+   Project Filter and Sort
+========================= */
+.project-controls {
+   display: flex;
+   justify-content: center;
+   gap: 20px;
+   max-width: 600px;
+   margin: 0 auto 30px;
+}
+.project-controls > div {
+   flex: 1;
+   min-width: 0;
+}
+.project-controls label {
+   display: block;
+   margin-bottom: 10px;
+   color: var(--strong-text);
+   font-weight: bold;
+}
+.project-controls select {
+   width: 100%;
+   padding: 14px 18px;
+   color: var(--strong-text);
+   background-color: var(--input-background);
+   border: 1px solid var(--input-border);
+   border-radius: 10px;
+   font: inherit;
+   cursor: pointer;
+}
+.project-controls select:focus {
+   outline: 2px solid var(--accent);
+   border-color: var(--accent);
+}
+@media (max-width: 600px) {
+   .project-controls {
+      flex-direction: column;
+      gap: 15px;
+   }
+}
 .no-projects-message {
    text-align: center;
    color: var(--accent);
@@ -282,14 +323,17 @@ body.light-mode #about::before {
    align-items: stretch;
 }
 .project-card {
-   flex: 1;
+   flex: 0 0 calc((100% - 30px) / 2);
+
    background: linear-gradient(145deg,
          var(--card-start),
          var(--card-end));
+
    border: 1px solid var(--border);
    border-radius: 16px;
    overflow: hidden;
    box-shadow: 0 8px 25px var(--shadow);
+
    transition:
       transform 0.5s ease,
       opacity 0.5s ease,

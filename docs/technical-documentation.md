@@ -1,7 +1,9 @@
 # Technical Documentation
 
 **Project:** 202353070-NorahAldiri-assignment3  
+
 **Course:** SWE 363 — Web Engineering and Development  
+
 **Author:** Norah Al Diri
 
 ## 1. Project Overview and Development History
@@ -18,31 +20,54 @@ The contact form remains a front-end demonstration; there is no custom backend, 
 
 ## 2. Technology Stack and Files
 
-- **HTML5:** Semantic `header`, `nav`, `main`, `section`, `article`, `form`, and `footer` elements; labeled controls and descriptive image text.
-- **CSS3:** Flexbox, Grid, custom properties, responsive media queries, transitions, and light/dark color themes.
-- **JavaScript (ES6):** DOM updates, events, array filtering and sorting, `async`/`await`, `fetch`, and error handling.
-- **Browser APIs:** `localStorage` for persistent theme choice and `IntersectionObserver` for scroll animations.
-- **GitHub REST API:** Public repository metadata and detected programming languages.
-- **Development and evaluation:** VS Code, Live Server, Git/GitHub, Chrome DevTools, and Lighthouse.
+- ****HTML5:**** Semantic `header`, `nav`, `main`, `section`, `article`, `form`, and `footer` elements; labeled controls and descriptive image text.
+
+- ****CSS3:**** Flexbox, Grid, custom properties, responsive media queries, transitions, and light/dark color themes.
+
+- ****JavaScript (ES6):**** DOM updates, events, array filtering and sorting, `async`/`await`, `fetch`, and error handling.
+
+- ****Browser APIs:**** `localStorage` for persistent theme choice and `IntersectionObserver` for scroll animations.
+
+- ****GitHub REST API:**** Public repository metadata and detected programming languages.
+
+- ****Development and evaluation:**** VS Code, Live Server, Git/GitHub, Chrome DevTools, and Lighthouse.
 
 ```text
+
 202353070-NorahAldiri-assignment3/
+
 ├── index.html
+
 ├── css/
+
 │   └── styles.css
+
 ├── js/
+
 │   └── script.js
+
 ├── assets/
+
 │   └── images/
+
 │       ├── route-repair.jpg
+
 │       ├── academic-copilot.jpg
+
 │       ├── sun.png
+
 │       └── moon.png
+
 ├── docs/
+
 │   ├── technical-documentation.md
+
 │   └── ai-usage-report.md
+
 ├── README.md
+
 └── .gitignore
+
 ```
 
 `index.html` owns the page content and interactive controls; `styles.css` owns presentation and responsive behavior; `script.js` owns interaction, validation, state, and API requests. The `docs` directory contains technical and AI-use documentation.
@@ -60,12 +85,19 @@ Assignment 1 introduced the light/dark theme toggle. Assignment 2 added persiste
 The default dark theme defines colors in `:root`, while `body.light-mode` overrides the same CSS variables. JavaScript restores the stored value from the `portfolio-theme` key, toggles the `light-mode` class on click, updates the sun/moon icon and accessible button label, and saves the new preference.
 
 ```javascript
+
 const savedTheme = localStorage.getItem("portfolio-theme");
+
 if (savedTheme === "light") {
+
    document.body.classList.add("light-mode");
+
 }
+
 // Illustrative light-mode case when saving the theme:
+
 localStorage.setItem("portfolio-theme", "light");
+
 ```
 
 The new GitHub cards use the existing `--card-start`, `--card-end`, `--text`, `--border`, and `--accent` variables to follow both themes.
@@ -81,16 +113,25 @@ HTML assigns `data-category="networking"` to RouterRepair and `data-category="ai
 ### Processing sequence
 
 1. Read the search input, selected category, and sort option.
+
 2. Use `filter()` to retain cards matching both search text and category.
+
 3. Use `localeCompare()` to sort matching cards by their `h3` title, or restore the saved original order.
+
 4. Set each card's `hidden` property according to whether it matches.
+
 5. Reorder visible cards in `.projects-container` with `appendChild()`.
+
 6. Show `#no-projects-message` when there are no matches.
 
 ```javascript
+
 const matchesSearch = card.textContent.toLowerCase().includes(searchText);
+
 const matchesCategory = selectedCategory === "all" || card.dataset.category === selectedCategory;
+
 return matchesSearch && matchesCategory;
+
 ```
 
 The `input` event updates results as the user types; `change` events update them when either select menu changes. The original DOM card elements are reused, preserving their existing CSS classes and content. The current implementation does not persist filter or sort selections across reloads; they are interaction state for the current page session.
@@ -100,13 +141,17 @@ The `input` event updates results as the user types; `change` events update them
 The portfolio requests public repositories for `Norahaldiri5`:
 
 ```http
+
 GET https://api.github.com/users/Norahaldiri5/repos?per_page=100
+
 ```
 
 `loadGithubRepos()` is an asynchronous function using `fetch()` and `await`. It checks `response.ok`, parses JSON, and filters repository names with the case-insensitive pattern:
 
 ```javascript
+
 /^202353070-NorahAldiri-Assignment[0-9]+$/i
+
 ```
 
 This includes matching numbered assignment repositories and excludes unrelated repositories, including the lab repository. It depends on the naming convention and the first page of up to 100 public repositories; repositories outside that page or with different names will not appear.
@@ -117,10 +162,14 @@ The script uses `textContent` for externally supplied text, and external links i
 
 ### Loading and error states
 
-- Before fetching, the page shows **Loading repositories...**
-- If the repository request fails or returns a non-success HTTP status, a user-friendly error and **Try Again** button appear.
-- If no repositories match the naming pattern, **No assignment repositories found.** appears.
-- If a languages request fails, the card remains visible with **Languages unavailable**.
+- Before fetching, the page shows ****Loading repositories...****
+
+- If the repository request fails or returns a non-success HTTP status, a user-friendly error and ****Try Again**** button appear.
+
+- If no repositories match the naming pattern, ****No assignment repositories found.**** appears.
+
+- If a languages request fails, the card remains visible with ****Languages unavailable****.
+
 - Errors are also logged to the developer console using `console.error()`.
 
 Public GitHub API calls do not require a token for this implementation, but they are subject to GitHub's unauthenticated rate limits. An internet connection is needed for live results. The site does not embed API secrets.
@@ -130,7 +179,9 @@ Public GitHub API calls do not require a token for this implementation, but they
 The contact form contains Name, Email, and Message fields. `novalidate` allows custom JavaScript feedback. A submit handler calls `preventDefault()`, trims inputs, and checks that all fields are nonempty and the email has a basic valid structure.
 
 ```javascript
-/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/^[^\s@]+@[^\s@]+.[^\s@]+$/
+
 ```
 
 Errors appear next to the relevant field and previous messages are cleared on each attempt. A valid submission displays a confirmation message and resets the form. No email is sent, and no submitted message is stored in a backend. Feedback elements use `aria-live` where provided in HTML.
@@ -151,7 +202,7 @@ The GitHub navigation link adds a fourth navigation item; its spacing should be 
 
 Project images use native `loading="lazy"` to defer loading when appropriate. The existing image assets were inspected locally: `academic-copilot.jpg` was approximately 52 KB and `route-repair.jpg` approximately 140 KB; the theme icons were approximately 4 KB each. No additional image compression was required based on those sizes.
 
-The site uses no JavaScript framework or bundler, and CSS variables help avoid duplicated theme rules. Lighthouse was run locally in Chrome DevTools; a later screenshot showed Performance **100/100**, Accessibility **100/100**, Best Practices **100/100**, and SEO **91/100**. These are environment-dependent measurements, not guarantees across browsers, devices, or network conditions. The earlier Lighthouse run reported a browser-cache clearing timeout; repeating the run produced the later results.
+The site uses no JavaScript framework or bundler, and CSS variables help avoid duplicated theme rules. Lighthouse was run locally in Chrome DevTools; a later screenshot showed Performance ****100/100****, Accessibility ****100/100****, Best Practices ****100/100****, and SEO ****91/100****. These are environment-dependent measurements, not guarantees across browsers, devices, or network conditions. The earlier Lighthouse run reported a browser-cache clearing timeout; repeating the run produced the later results.
 
 ## 11. Verification and Test Cases
 
@@ -181,11 +232,27 @@ During development, the project reveal behavior was observed working, responsive
 ## 12. Known Constraints and Future Work
 
 - The contact form validates inputs but does not transmit messages.
+
 - GitHub results depend on external service availability, rate limits, repository naming, and pagination.
+
 - The GitHub language endpoint adds a separate request for each displayed repository.
+
 - Filter and sort selections are not saved across reloads; only the theme preference is persistent.
+
 - Future enhancements could include a secure contact-form service, additional academic projects, repository pagination, and deployment to GitHub Pages.
 
-## 13. AI Use and Academic Integrity
+## 13. Code Quality and Maintainability
+
+The portfolio follows several practices to improve code readability, organization, and maintainability:
+
+- **Separation of Concerns:** HTML defines the page structure, CSS handles styling and responsive layouts, and JavaScript manages interactions and application logic.
+- **Code Organization:** JavaScript functionality is divided into clearly labeled sections for theme management, project search/filter/sort, contact form validation, reveal animations, and GitHub API integration.
+- **Meaningful Naming:** Variables and functions use descriptive names, such as `updateProjects()`, `loadGithubRepos()`, and `projectFilter`.
+- **Reusable Logic:** Search, filtering, and sorting are combined into a single `updateProjects()` function to reduce duplicated code.
+- **Consistent Styling:** CSS custom properties are reused across components to maintain consistent colors and support light and dark themes.
+- **Error Handling:** GitHub API requests use `try/catch` blocks, while form validation provides clear feedback for invalid inputs.
+- **Maintainability:** The project uses a simple folder structure and vanilla JavaScript without unnecessary frameworks or dependencies.
+
+## 14. AI Use and Academic Integrity
 
 ChatGPT was used during Assignment 3 for feature planning, code explanations, code review, debugging, and documentation support. AI-assisted changes must be reviewed and understood by the student. The detailed usage log, declaration, and evidence inventory belong in [AI Usage Report](ai-usage-report.md). Full unedited conversations and intermediate AI outputs must be submitted separately as the required Blackboard evidence ZIP, not committed to the repository.

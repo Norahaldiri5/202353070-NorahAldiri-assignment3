@@ -1,77 +1,89 @@
-# 202353070-NorahAldiri-Assignment2
+# 202353070-NorahAldiri-Assignment3
 
-# Personal Portfolio Website — Interactive Features
+## Personal Portfolio Website — Advanced Functionality
 
-A responsive and interactive personal portfolio website developed for **SWE 363: Web Engineering and Development**.
+A responsive and interactive personal portfolio website developed for **SWE 363: Web Engineering and Development** at King Fahd University of Petroleum and Minerals (KFUPM).
 
-This project builds upon Assignment 1 by enhancing the original portfolio with JavaScript-driven interactivity, data handling, animations, and user feedback while preserving its existing design and content.
+This project builds upon Assignments 1 and 2 by integrating an external API, implementing advanced project filtering and sorting, and improving website performance while preserving the original design and functionality.
 
-The website introduces me as a Software Engineering student at KFUPM with a concentration in Cloud Computing and showcases my academic projects, technical interests, and contact information.
+The portfolio introduces me as a Software Engineering student specializing in Cloud Computing and showcases my academic projects, technical interests, and contact information.
 
 ## Features
 
-### Original Features (Assignment 1)
+### Core Portfolio Features — Assignment 1
 
 - About Me section introducing my academic background and interests.
-- Academic projects showcase featuring RouterRepair: Network Detective and Academic Copilot.
+- Academic project showcase featuring RouterRepair: Network Detective and Academic Copilot.
 - Contact section with email and GitHub links.
-- Responsive design for desktop, tablet, and mobile devices.
-- Sticky navigation bar with smooth scrolling.
+- Responsive design for desktop, tablet, and mobile screens.
+- Sticky navigation with smooth scrolling.
 - Light and dark theme toggle.
-- Accessible form labels and descriptive image alternative text.
-- Hover effects on navigation links, buttons, and project cards.
+- Accessible labels, descriptive image text, and interactive hover effects.
 
-### New Features (Assignment 2)
+### Interactive Features — Assignment 2
 
-#### 1. Dynamic Content — Live Project Search
+- **Live Project Search:** Dynamically searches project names, course information, and descriptions.
+- **Persistent Theme Preference:** Uses `localStorage` to remember the selected theme across page reloads.
+- **Contact Form Validation:** Checks required fields and email format, displays inline errors, and provides confirmation feedback.
+- **Scroll Reveal Animation:** Uses `IntersectionObserver` to animate project cards when they enter the viewport, while respecting reduced-motion preferences.
 
-- Implemented a live search feature that filters project cards based on user input.
-- Users can search by project name, course, or keywords.
-- Search results update immediately as the user types.
-- Displays a "No projects found" message when no projects match the search.
+### Advanced Features — Assignment 3
 
-#### 2. Data Handling — Local Storage & Form Validation
+**1. GitHub API Integration**
 
-- Used JavaScript `localStorage` to save the user's selected light or dark theme.
-- Restored the saved theme automatically when the page is refreshed or revisited.
-- Implemented contact form validation for Name, Email, and Message fields.
-- Displays confirmation feedback after successful validation without sending an actual email.
+- Fetches public repository information using the GitHub REST API.
+- Displays only repositories matching the academic assignment naming pattern.
+- Shows repository names, descriptions, star counts, and update dates.
+- Fetches and displays programming languages detected for each repository.
+- Handles API failures with a user-friendly message and retry button.
+- Provides direct links to GitHub repositories.
 
-#### 3. Animation and Transitions — Project Reveal Animation
+**2. Project Filtering and Sorting**
 
-- Added a fade-in and slide-up animation to project cards when they enter the viewport.
-- Used the `IntersectionObserver` API to trigger animations.
-- Preserved existing smooth scrolling and hover effects.
-- Supported reduced-motion preferences for accessibility.
+- Filters projects by Networking or Artificial Intelligence.
+- Sorts projects alphabetically from A to Z or Z to A.
+- Restores the original project order when Default Order is selected.
+- Combines live search, category filtering, and sorting.
+- Displays a message when no projects match the selected criteria.
 
-#### 4. Error Handling and User Feedback
+**3. State Management**
 
-- Displays inline error messages for empty or invalid contact form fields.
-- Shows a confirmation message when all form inputs pass validation.
-- Provides a "No projects found" message when a search returns no matches.
-- Gives users clear feedback without unnecessary page reloads.
+- Preserves the selected light or dark theme using browser `localStorage`.
+- Updates project visibility and ordering according to user selections.
+- Updates the interface dynamically without reloading the page.
 
-#### 5. AI Enhancement
+**4. Performance Improvements**
 
-- Used ChatGPT to support feature planning, code explanations, debugging, and UI/UX improvements.
-- Reviewed and adapted AI-assisted suggestions to fit the existing portfolio structure.
-- Tested the implemented features to verify their functionality.
-- Documented AI assistance in `docs/ai-usage-report.md`.
+- Uses native lazy loading for project images.
+- Maintains small image assets to reduce loading overhead.
+- Uses vanilla JavaScript without additional front-end frameworks.
+- Applies responsive layouts and reusable CSS styling.
+- Evaluates performance using Chrome Lighthouse.
+
+**5. User Experience and Error Handling**
+
+- Includes a GitHub Repositories navigation link.
+- Provides accessible labels for form fields and interactive controls.
+- Displays validation feedback for invalid contact form submissions.
+- Handles GitHub API request errors and unavailable language data.
+- Preserves existing animations and theme functionality.
 
 ## Technologies Used
 
-- **HTML5:** Semantic page structure, forms, and accessible content.
-- **CSS3:** Responsive layouts, CSS variables, themes, transitions, and animations.
-- **JavaScript (ES6):** DOM manipulation, event handling, dynamic content, and form validation.
-- **Web Storage API (`localStorage`):** Saving and restoring the user's theme preference.
-- **Intersection Observer API:** Triggering animations when project cards enter the viewport.
-- **Git and GitHub:** Version control and project management.
+- **HTML5:** Semantic structure, navigation, project cards, and forms.
+- **CSS3:** Responsive layouts, custom properties, themes, and animations.
+- **JavaScript (ES6):** DOM manipulation, asynchronous requests, filtering, sorting, and validation.
+- **GitHub REST API:** External repository and programming-language data.
+- **Web Storage API:** Theme preference persistence using `localStorage`.
+- **Intersection Observer API:** Scroll-triggered project animations.
+- **Git and GitHub:** Version control and repository hosting.
 - **Visual Studio Code:** Development environment.
+- **Chrome DevTools and Lighthouse:** Performance and accessibility evaluation.
 
 ## Project Structure
 
 ```text
-.
+202353070-NorahAldiri-assignment3/
 ├── assets/
 │   └── images/
 │       ├── academic-copilot.jpg
@@ -90,198 +102,83 @@ The website introduces me as a Software Engineering student at KFUPM with a conc
 └── README.md
 ```
 
-## Running the Project Locally
+## Setup and Running Instructions
+
+### Requirements
+
+- A modern web browser, such as Google Chrome, Firefox, Safari, or Microsoft Edge.
+- An internet connection to retrieve live GitHub API data.
+- Visual Studio Code with the Live Server extension (recommended).
+
+No npm installation, external framework, backend server, or build process is required.
+
+### Run Locally
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Norahaldiri5/202353070-NorahAldiri-Assignment2.git
+   git clone https://github.com/Norahaldiri5/202353070-NorahAldiri-assignment3.git
    ```
 
 2. Open the project folder in Visual Studio Code.
+3. Open `index.html` using the Live Server extension.
+4. Navigate through About Me, Projects, GitHub Repositories, and Contact.
+5. Use the search field, category filter, and sorting menu to explore projects.
+6. Switch between light and dark modes to test theme persistence.
+7. Test contact form validation and GitHub repository loading.
 
-3. Open `index.html` directly in a modern browser or use the **Live Server** extension in VS Code.
+The portfolio can also be opened directly through `index.html`, although Live Server is recommended for local development.
 
-4. Navigate between the About Me, Projects, and Contact sections.
+## Testing and Performance
 
-5. Test the interactive features:
-   - Type a keyword in the Project Search field to filter the project cards.
-   - Switch between light and dark themes, then refresh the page to verify the saved preference.
-   - Enter invalid and valid data in the contact form to test validation and feedback.
-   - Scroll to the Projects section to observe the reveal animation.
+The website was evaluated locally using Chrome DevTools and Lighthouse.
 
-No package installation or build process is required because the website uses HTML, CSS, and vanilla JavaScript.
+### Lighthouse Results
 
-## Testing and Validation
+| Category | Score |
+|---|---:|
+| Performance | 100/100 |
+| Accessibility | 100/100 |
+| Best Practices | 100/100 |
+| SEO | 91/100 |
 
-The following functionality was tested during development:
+These scores represent a local Lighthouse test and may vary depending on the browser, device, network conditions, and testing environment.
 
-- Navigation links scroll to their corresponding sections.
-- Project Search filters matching cards and displays an empty-state message when no results are found.
-- Clearing the search field restores all project cards.
-- Theme preferences persist after refreshing the page.
-- The contact form displays inline validation errors for empty fields and invalid email addresses.
-- Valid contact form input displays a confirmation message and clears the form.
-- Project reveal animations work without interfering with the search functionality.
-- Light and dark themes maintain readable text and interface elements.
+### Functional Testing
 
-The contact form is a front-end demonstration only and does not send messages to an email server.
+The following functionality is included for verification:
 
-## AI Usage
+- Search, filter, and sort project cards individually and in combination.
+- Display an appropriate message when no projects match.
+- Preserve theme preference after refreshing the page.
+- Validate empty fields and invalid email addresses in the contact form.
+- Display repository data and programming languages from GitHub.
+- Handle API failures and retry requests.
+- Display project images and responsive layouts on different screen sizes.
+- Preserve project reveal animations and navigation functionality.
 
-ChatGPT was used as an AI-assisted development tool for feature planning, code explanations, debugging, UI/UX improvements, and documentation.
-
-For Assignment 2, AI assistance focused on implementing Live Project Search, theme persistence using `localStorage`, contact form validation, and scroll-triggered animations.
-
-AI-assisted suggestions were reviewed and adapted to the existing portfolio structure. The implementation was tested to ensure that the new features worked alongside the original functionality.
-
-For more details, see [AI Usage Report](docs/ai-usage-report.md).
-
-## Technical Documentation
-
-Detailed explanations of the website's structure, functionality, JavaScript features, accessibility considerations, and testing are available in [Technical Documentation](docs/technical-documentation.md).
-
-# 202353070-NorahAldiri-Assignment2
-
-# Personal Portfolio Website — Interactive Features
-
-A responsive and interactive personal portfolio website developed for **SWE 363: Web Engineering and Development**.
-
-This project builds upon Assignment 1 by enhancing the original portfolio with JavaScript-driven interactivity, data handling, animations, and user feedback while preserving its existing design and content.
-
-The website introduces me as a Software Engineering student at KFUPM with a concentration in Cloud Computing and showcases my academic projects, technical interests, and contact information.
-
-## Features
-
-### Original Features (Assignment 1)
-
-- About Me section introducing my academic background and interests.
-- Academic projects showcase featuring RouterRepair: Network Detective and Academic Copilot.
-- Contact section with email and GitHub links.
-- Responsive design for desktop, tablet, and mobile devices.
-- Sticky navigation bar with smooth scrolling.
-- Light and dark theme toggle.
-- Accessible form labels and descriptive image alternative text.
-- Hover effects on navigation links, buttons, and project cards.
-
-### New Features (Assignment 2)
-
-#### 1. Dynamic Content — Live Project Search
-
-- Implemented a live search feature that filters project cards based on user input.
-- Users can search by project name, course, or keywords.
-- Search results update immediately as the user types.
-- Displays a "No projects found" message when no projects match the search.
-
-#### 2. Data Handling — Local Storage & Form Validation
-
-- Used JavaScript `localStorage` to save the user's selected light or dark theme.
-- Restored the saved theme automatically when the page is refreshed or revisited.
-- Implemented contact form validation for Name, Email, and Message fields.
-- Displays confirmation feedback after successful validation without sending an actual email.
-
-#### 3. Animation and Transitions — Project Reveal Animation
-
-- Added a fade-in and slide-up animation to project cards when they enter the viewport.
-- Used the `IntersectionObserver` API to trigger animations.
-- Preserved existing smooth scrolling and hover effects.
-- Supported reduced-motion preferences for accessibility.
-
-#### 4. Error Handling and User Feedback
-
-- Displays inline error messages for empty or invalid contact form fields.
-- Shows a confirmation message when all form inputs pass validation.
-- Provides a "No projects found" message when a search returns no matches.
-- Gives users clear feedback without unnecessary page reloads.
-
-#### 5. AI Enhancement
-
-- Used ChatGPT to support feature planning, code explanations, debugging, and UI/UX improvements.
-- Reviewed and adapted AI-assisted suggestions to fit the existing portfolio structure.
-- Tested the implemented features to verify their functionality.
-- Documented AI assistance in `docs/ai-usage-report.md`.
-
-## Technologies Used
-
-- **HTML5:** Semantic page structure, forms, and accessible content.
-- **CSS3:** Responsive layouts, CSS variables, themes, transitions, and animations.
-- **JavaScript (ES6):** DOM manipulation, event handling, dynamic content, and form validation.
-- **Web Storage API (`localStorage`):** Saving and restoring the user's theme preference.
-- **Intersection Observer API:** Triggering animations when project cards enter the viewport.
-- **Git and GitHub:** Version control and project management.
-- **Visual Studio Code:** Development environment.
-
-## Project Structure
-
-```text
-.
-├── assets/
-│   └── images/
-│       ├── academic-copilot.jpg
-│       ├── moon.png
-│       ├── route-repair.jpg
-│       └── sun.png
-├── css/
-│   └── styles.css
-├── docs/
-│   ├── ai-usage-report.md
-│   └── technical-documentation.md
-├── js/
-│   └── script.js
-├── .gitignore
-├── index.html
-└── README.md
-```
-
-## Running the Project Locally
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/Norahaldiri5/202353070-NorahAldiri-Assignment2.git
-   ```
-
-2. Open the project folder in Visual Studio Code.
-
-3. Open `index.html` directly in a modern browser or use the **Live Server** extension in VS Code.
-
-4. Navigate between the About Me, Projects, and Contact sections.
-
-5. Test the interactive features:
-   - Type a keyword in the Project Search field to filter the project cards.
-   - Switch between light and dark themes, then refresh the page to verify the saved preference.
-   - Enter invalid and valid data in the contact form to test validation and feedback.
-   - Scroll to the Projects section to observe the reveal animation.
-
-No package installation or build process is required because the website uses HTML, CSS, and vanilla JavaScript.
-
-## Testing and Validation
-
-The following functionality was tested during development:
-
-- Navigation links scroll to their corresponding sections.
-- Project Search filters matching cards and displays an empty-state message when no results are found.
-- Clearing the search field restores all project cards.
-- Theme preferences persist after refreshing the page.
-- The contact form displays inline validation errors for empty fields and invalid email addresses.
-- Valid contact form input displays a confirmation message and clears the form.
-- Project reveal animations work without interfering with the search functionality.
-- Light and dark themes maintain readable text and interface elements.
-
-The contact form is a front-end demonstration only and does not send messages to an email server.
+**Note:** The contact form is a front-end demonstration. It validates user input but does not send emails or store submitted messages.
 
 ## AI Usage
 
-ChatGPT was used as an AI-assisted development tool for feature planning, code explanations, debugging, UI/UX improvements, and documentation.
+ChatGPT (GPT-6) was used to support feature planning, code generation, explanations, code review, debugging, CSS improvements, performance optimization, and documentation.
 
-For Assignment 2, AI assistance focused on implementing Live Project Search, theme persistence using `localStorage`, contact form validation, and scroll-triggered animations.
+AI assistance included implementing GitHub API integration, combining project search with filtering and sorting, reviewing code suggestions, and improving the documentation structure.
 
-AI-assisted suggestions were reviewed and adapted to the existing portfolio structure. The implementation was tested to ensure that the new features worked alongside the original functionality.
+AI-generated suggestions were reviewed and adapted during development. The development process, modifications, verification activities, and AI conversations are documented in the AI Usage Report.
 
-For more details, see [AI Usage Report](docs/ai-usage-report.md).
+See [AI Usage Report](docs/ai-usage-report.md).
+
+The complete AI conversation evidence and intermediate AI-generated artifacts are submitted separately through Blackboard, as required by the assignment instructions.
 
 ## Technical Documentation
 
-Detailed explanations of the website's structure, functionality, JavaScript features, accessibility considerations, and testing are available in [Technical Documentation](docs/technical-documentation.md).
+For implementation details, application logic, API handling, state management, performance considerations, and testing information, see [Technical Documentation](docs/technical-documentation.md).
 
+## Author
 
+**Norah Al Diri**  
+Student ID: 202353070  
+Software Engineering Student  
+Cloud Computing Concentration  
+King Fahd University of Petroleum and Minerals (KFUPM)

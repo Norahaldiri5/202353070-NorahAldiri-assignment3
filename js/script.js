@@ -4,7 +4,6 @@ const themeIcon = document.getElementById("theme-icon");
 /* =========================
    Save Theme Preference
 ========================= */
-
 const savedTheme = localStorage.getItem("portfolio-theme");
 
 if (savedTheme === "light") {
@@ -14,42 +13,31 @@ if (savedTheme === "light") {
 }
 
 themeToggle.addEventListener("click", function () {
-
    document.body.classList.toggle("light-mode");
-
    localStorage.setItem(
       "portfolio-theme",
       document.body.classList.contains("light-mode") ? "light" : "dark"
    );
 
-
    if (document.body.classList.contains("light-mode")) {
-
       themeIcon.src = "assets/images/moon.png";
-
       themeToggle.setAttribute(
          "aria-label",
          "Switch to dark mode"
       );
-
    }
    else {
-
       themeIcon.src = "assets/images/sun.png";
-
       themeToggle.setAttribute(
          "aria-label",
          "Switch to light mode"
       );
-
    }
-
 });
 
 /* =========================
    Live Project Search
 ========================= */
-
 const projectSearch = document.getElementById("project-search-input");
 const projectCards = document.querySelectorAll(".project-card");
 const noProjectsMessage = document.getElementById("no-projects-message");
@@ -72,11 +60,9 @@ projectSearch.addEventListener("input", function () {
    noProjectsMessage.hidden = visibleProjects > 0;
 });
 
-
 /* =========================
    Contact Form Validation
 ========================= */
-
 const contactForm = document.getElementById("contact-form");
 
 contactForm.addEventListener("submit", function (event) {
@@ -98,13 +84,11 @@ contactForm.addEventListener("submit", function (event) {
    formFeedback.textContent = "";
 
    let isValid = true;
-
    // Name validation
    if (name === "") {
       nameError.textContent = "Please enter your name.";
       isValid = false;
    }
-
    // Email validation
    if (email === "") {
       emailError.textContent = "Please enter your email.";
@@ -113,13 +97,11 @@ contactForm.addEventListener("submit", function (event) {
       emailError.textContent = "Please enter a valid email address.";
       isValid = false;
    }
-
    // Message validation
    if (message === "") {
       messageError.textContent = "Please enter your message.";
       isValid = false;
    }
-
    // Show success feedback only if all fields are valid
    if (isValid) {
       formFeedback.textContent =
@@ -129,11 +111,9 @@ contactForm.addEventListener("submit", function (event) {
    }
 });
 
-
 /* =========================
    Project Reveal Animation
 ========================= */
-
 if ("IntersectionObserver" in window &&
    !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
 
@@ -155,3 +135,97 @@ if ("IntersectionObserver" in window &&
       revealObserver.observe(card);
    });
 }
+
+/* =========================
+   GitHub API Integration
+========================= */
+const githubUsername = "Norahaldiri5";
+const githubReposContainer = document.getElementById("github-repos");
+const githubError = document.getElementById("github-error");
+const githubRetry = document.getElementById("github-retry");
+
+// Fetch public repositories from GitHub
+async function loadGithubRepos() {
+  githubReposContainer.innerHTML = "<p>Loading repositories...</p>";
+  githubError.hidden = true;
+  githubRetry.hidden = true;
+
+  try {
+    const response = await fetch(
+      `https://api.github.com/users/${githubUsername}/repos?per_page=100`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch repositories");
+    }
+
+    const repos = await response.json();
+
+    // Show only portfolio assignment repositories
+    const assignmentRepos = repos.filter((repo) =>
+      /^202353070-NorahAldiri-Assignment[0-9]+$/i.test(repo.name)
+    );
+
+    githubReposContainer.innerHTML = "";
+
+    if (assignmentRepos.length === 0) {
+      githubReposContainer.textContent =
+        "No assignment repositories found.";
+      return;
+    }
+
+    for (const repo of assignmentRepos) {
+      const card = document.createElement("article");
+      card.className = "github-card";
+
+      const title = document.createElement("a");
+      title.href = repo.html_url;
+      title.target = "_blank";
+      title.rel = "noopener noreferrer";
+      title.textContent = repo.name;
+
+      const description = document.createElement("p");
+      description.textContent =
+        repo.description || "Public GitHub repository";
+
+      const details = document.createElement("p");
+      details.textContent =
+        `Stars: ${repo.stargazers_count} | Updated: ${
+          new Date(repo.updated_at).toLocaleDateString()
+        }`;
+
+      const languages = document.createElement("p");
+      languages.textContent = "Loading languages...";
+
+      card.append(title, description, details, languages);
+      githubReposContainer.appendChild(card);
+
+      try {
+        const langResponse = await fetch(repo.languages_url);
+
+        if (!langResponse.ok) {
+          throw new Error("Failed to fetch languages");
+        }
+
+        const languageData = await langResponse.json();
+        const languageNames = Object.keys(languageData);
+
+        languages.textContent = languageNames.length
+          ? `Languages: ${languageNames.join(" · ")}`
+          : "Languages: Not specified";
+      } catch (error) {
+        console.error("Language API Error:", error);
+        languages.textContent = "Languages unavailable";
+      }
+    }
+  } catch (error) {
+    console.error("GitHub API Error:", error);
+
+    githubReposContainer.innerHTML = "";
+    githubError.hidden = false;
+    githubRetry.hidden = false;
+  }
+}
+
+githubRetry.addEventListener("click", loadGithubRepos);
+loadGithubRepos();
